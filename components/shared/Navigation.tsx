@@ -1,11 +1,19 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { SignedIn, UserButton } from "@clerk/nextjs";
+import {
+  SignIn,
+  SignInButton,
+  SignUp,
+  SignUpButton,
+  SignedIn,
+  UserButton,
+} from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 const Navbar = () => {
   return (
-    <nav className="flex-between background-light900_dark200 fixed z-50 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
+    <nav className="flex-between bg-dark-500 dark:dark-gradient fixed z-50 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
       <Link href="/" className="flex items-center gap-1">
         <Image src="/images/site-logo.png" width={23} height={23} alt="logo" />
         <p className="h2-bold text-dark-100 dark:text-light-900 max-sm:hidden">
@@ -13,18 +21,18 @@ const Navbar = () => {
         </p>
       </Link>
 
-      <div className="flex-between gap-5">
-        <UserButton
-          afterSignOutUrl="/"
-          appearance={{
-            elements: {
-              avatarBox: "h-20 w-20",
-            },
-            variables: {
-              colorPrimary: "bg-dark-500",
-            },
-          }}
-        />
+      <div className="flex-between gap-5 text-light-700">
+        {<SignedIn /> && (
+          <UserButton
+            afterSignOutUrl="/"
+            appearance={{
+              elements: {
+                avatarBox: "h-10 w-10",
+              },
+            }}
+          />
+        )}
+        <SignUpButton /> <SignInButton />
       </div>
     </nav>
   );

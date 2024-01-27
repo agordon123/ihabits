@@ -12,6 +12,7 @@ export default authMiddleware({
     "/auth/callback",
     "/api/trpc/[trpc]",
     "/api/webhook(.*)",
+    "/nylas/(*)",
   ],
   ignoredRoutes: ["/api/webhook", "/api/chatgpt"],
 });
@@ -25,7 +26,7 @@ async function isAuthenticated(
   }
   const { userId } = auth();
   // Query our mock db to retrieve the stored user access token
-  const user = await NylasInfo.findOne({ id: "" });
+  const user = await NylasInfo.findOne({ id: userId });
 
   if (!user) {
     return res.status(401).send("Unauthorized");
