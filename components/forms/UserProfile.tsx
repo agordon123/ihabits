@@ -26,9 +26,9 @@ const UserProfile = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: auth.user?.email,
-      picture: auth.user?.picture,
-      name: auth.user?.fullName,
+      email: "",
+      picture: "",
+      name: "",
     },
   });
   const onSubmit = () => {};
