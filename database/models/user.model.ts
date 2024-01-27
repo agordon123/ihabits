@@ -39,6 +39,6 @@ const userSchema = new Schema({
   nylasInfo: [{ type: String, ref: "NylasInfo" }],
 });
 
-export const UserModel = models.User || model("User", userSchema);
+export const UserModel = models.User || model<IUser>("User", userSchema);
 
 export default UserModel;

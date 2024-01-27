@@ -15,7 +15,6 @@ const journalEntrySchema = new Schema<IJournalEntry>({
   createdAt: { type: Date, required: true },
 });
 
-export const JournalEntry = mongoose.model<IJournalEntry>(
-  "JournalEntry",
-  journalEntrySchema
-);
+export const JournalEntry =
+  mongoose.model<IJournalEntry>("JournalEntry", journalEntrySchema) ||
+  models.JournalEntry;

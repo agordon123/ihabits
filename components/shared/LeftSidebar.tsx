@@ -6,13 +6,14 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import {
+  auth,
   SignInButton,
   SignOutButton,
   useAuth,
+  UserButton,
   useUser,
   WithUser,
 } from "@clerk/nextjs";
-import { createUser, getUser } from "@/lib/actions/users.actions";
 
 const LeftSidebar = () => {
   const pathname = usePathname();
@@ -21,14 +22,23 @@ const LeftSidebar = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const handleOnClick = async () => {};
   useEffect(() => {
+    const userCheck = async () => {
+      if (!userId) {
+        return;
+      } else {
+        console.log("userId", userId);
+      }
+    };
     if (pathname === "/dashboard") {
       setLoggedIn(true);
+      console.log("pathname", pathname);
+      console.log(auth);
     }
-  }, [pathname]);
+  }, [pathname, userId]);
   return (
     <section className="custom-scrollbar bg-dark-500 sticky left-0 top-0 flex h-screen w-fit flex-col justify-between  overflow-y-auto border-r p-6 pt-8 shadow-light-300 dark:shadow-none max-sm:hidden xl:w-[266px]">
       <div className="mt-10">
-        <Link href={`/dashboard`}>
+        <Link href={`/`}>
           <Image
             className="object-contain"
             src={"/images/site-logo.png"}
@@ -61,7 +71,7 @@ const LeftSidebar = () => {
             </Link>
           );
         })}
-        {!loggedIn && <SignInButton mode="redirect" />}
+        <UserButton />
       </div>
     </section>
   );
