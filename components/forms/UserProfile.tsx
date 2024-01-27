@@ -15,16 +15,10 @@ import { Input } from "../ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "react-day-picker";
-const formSchema = z.object({
-  email: z.string().email(),
-  picture: z.string().url(),
-  name: z.string(),
-  appleId: z.string().optional(),
-  googleId: z.string().optional(),
-});
+import { userSchema } from "@/lib/validation";
 const UserProfile = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof userSchema>>({
+    resolver: zodResolver(userSchema),
     defaultValues: {
       email: "",
       picture: "",

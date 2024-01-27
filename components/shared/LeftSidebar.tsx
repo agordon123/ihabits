@@ -14,27 +14,33 @@ import {
   useUser,
   WithUser,
 } from "@clerk/nextjs";
+import { getUser } from "@/lib/actions/users.actions";
+import { IUser } from "@/database/models/user.model";
 
 const LeftSidebar = () => {
   const pathname = usePathname();
   const { userId } = useAuth();
   const router = useRouter();
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [user, setUser] = useState<IUser | null>(null);
   const handleOnClick = async () => {};
   useEffect(() => {
     const userCheck = async () => {
       if (!userId) {
         return;
       } else {
-        console.log("userId", userId);
+        const currentUser = await getUser(userId);
+        setUser(currentUser);
+        setLoggedIn(true);
       }
     };
     if (pathname === "/dashboard") {
-      setLoggedIn(true);
-      console.log("pathname", pathname);
-      console.log(auth);
+      userCheck();
+      if (!loggedIn) {
+        router.push("/sign-in");
+      }
     }
-  }, [pathname, userId]);
+  }, [loggedIn, pathname, router, userId]);
   return (
     <section className="custom-scrollbar bg-dark-500 sticky left-0 top-0 flex h-screen w-fit flex-col justify-between  overflow-y-auto border-r p-6 pt-8 shadow-light-300 dark:shadow-none max-sm:hidden xl:w-[266px]">
       <div className="mt-10">
@@ -61,17 +67,16 @@ const LeftSidebar = () => {
               key={item.route}
               className={`${
                 isActive
-                  ? "primary-gradient rounded-lg text-light-900 border-light-700"
-                  : "text-dark300_light900"
+                  ? " rounded-lg text-light-900 dark:text-light-800 border-light-700"
+                  : "text-dark500_light900 background-light800_darkgradient"
               }
               
-                : flex items-center justify-start gap-4 bg-transparent p-4`}
+                : flex items-center justify-start gap-4 bg-transparent p-4 text-light-900`}
             >
               {item.name}
             </Link>
           );
         })}
-        <UserButton />
       </div>
     </section>
   );

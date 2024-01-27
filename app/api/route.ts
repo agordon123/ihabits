@@ -9,6 +9,6 @@ export async function POST() {
   const params = { firstName: "John", lastName: "Wick" };
 
   const user = await clerkClient.users.updateUser(userId, params);
-
+  console.log(user, "user");
   return NextResponse.json({ user });
 }

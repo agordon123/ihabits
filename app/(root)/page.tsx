@@ -8,17 +8,20 @@ import {
   SignInButton,
   auth,
   useAuth,
+  SignUp,
 } from "@clerk/nextjs";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="flex bg-dark-500 min-h-[100%] min-w-[100%] text-light-700">
-      <Button className="w-[50px] h-[50px]">
-        {" "}
+      <h1 className="h1-bold text-light-100">
+        Welcome to iHabits, for ADHDers by ADHDers
+      </h1>
+      <div className="mt-10 justify-center items-center">
         <SignUpButton />
-      </Button>{" "}
-      Returning?{" "}
+      </div>
+
       <Button>
         <SignInButton />
       </Button>

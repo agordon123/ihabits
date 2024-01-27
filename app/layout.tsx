@@ -5,6 +5,7 @@ import { ClerkProvider, UserButton } from "@clerk/nextjs";
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import Navbar from "@/components/shared/Navigation";
 import { ThemeProvider } from "@/context/ThemeProvider";
+import { dark } from "@clerk/themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,10 +28,7 @@ export default function RootLayout({
       afterSignUpUrl="/dashboard"
       key={process.env.CLERK_SECRET_KEY}
       appearance={{
-        elements: {
-          formButtonPrimary: "dark:bg-dark-500",
-          footerActionLink: `primary-text-gradient hover:text-primary-500`,
-        },
+        baseTheme: dark,
       }}
     >
       <html lang="en">
