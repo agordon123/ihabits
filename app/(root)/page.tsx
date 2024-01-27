@@ -12,14 +12,9 @@ import {
 import Image from "next/image";
 
 export default function Home() {
-  const { userId } = auth();
-  if (userId) {
-    const user = getUser(JSON.stringify(userId));
-  }
-
   return (
-    <div className="bg-dark-500 min-h-[100%] min-w-[100%] text-light-700">
-      <Button className="l-[50px] h-[50px]">
+    <div className="flex bg-dark-500 min-h-[100%] min-w-[100%] text-light-700">
+      <Button className="w-[50px] h-[50px]">
         {" "}
         <SignUpButton />
       </Button>{" "}

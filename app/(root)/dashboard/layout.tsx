@@ -6,7 +6,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="background-light700_dark400 min-h-fit min-w-fit">
+    <main className="flex background-light700_dark400 min-h-fit min-w-fit">
       {children}
     </main>
   );
