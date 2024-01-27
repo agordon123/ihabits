@@ -72,7 +72,7 @@ export async function POST(req: Request) {
       email: email_addresses[0].email_address,
       picture: image_url,
     });
-
+    console.log(mongoUser, "webhook mongo user created");
     return NextResponse.json({ message: "OK", user: mongoUser });
   }
 
