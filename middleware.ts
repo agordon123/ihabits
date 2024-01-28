@@ -12,7 +12,7 @@ export default authMiddleware({
     "/auth/callback",
     "/api/trpc/[trpc]",
     "/api/webhook(.*)",
-    "/nylas/(*)",
+    "/nylas(.*)",
   ],
   ignoredRoutes: ["/api/webhook", "/api/chatgpt"],
 });
