@@ -29,6 +29,7 @@ const Navbar = () => {
               elements: {
                 avatarBox: "h-10 w-10",
               },
+              baseTheme: dark,
             }}
           />
         )}

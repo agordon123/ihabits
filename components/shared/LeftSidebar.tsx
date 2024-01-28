@@ -16,8 +16,11 @@ import {
 } from "@clerk/nextjs";
 import { getUser } from "@/lib/actions/users.actions";
 import { IUser } from "@/database/models/user.model";
-
-const LeftSidebar = () => {
+interface Props {
+  clerkId?: string;
+  _id: string;
+}
+const LeftSidebar = ({ clerkId, _id }: Props) => {
   const pathname = usePathname();
   const { userId } = useAuth();
   const router = useRouter();
@@ -29,8 +32,6 @@ const LeftSidebar = () => {
       if (!userId) {
         return;
       } else {
-        const currentUser = await getUser(userId);
-        setUser(currentUser);
         setLoggedIn(true);
       }
     };
