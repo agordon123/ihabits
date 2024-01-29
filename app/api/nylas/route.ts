@@ -12,10 +12,7 @@ Nylas.config({
 const CLIENT_URI =
   process.env.CLIENT_URI || `http://localhost:${process.env.PORT || 3000}`;
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function POST(req: NextApiRequest, res: NextApiResponse) {
   await Nylas.application({
     redirectUris: [CLIENT_URI],
   }).then((applicationDetails) => {
