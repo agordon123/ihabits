@@ -3,7 +3,6 @@
 import UserModel from "@/database/models/user.model";
 import { CreateUserParams } from "./shared.types";
 import { connectToDb } from "@/database/db";
-import { revalidatePath } from "next/cache";
 
 export const createUser = async (params: CreateUserParams) => {
   try {
