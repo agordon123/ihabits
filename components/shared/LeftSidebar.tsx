@@ -14,13 +14,9 @@ import {
   useUser,
   WithUser,
 } from "@clerk/nextjs";
-import { getUser } from "@/lib/actions/users.actions";
 import { IUser } from "@/database/models/user.model";
-interface Props {
-  clerkId?: string;
-  _id: string;
-}
-const LeftSidebar = ({ clerkId, _id }: Props) => {
+
+const LeftSidebar = () => {
   const pathname = usePathname();
   const { userId } = useAuth();
   const router = useRouter();
