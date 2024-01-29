@@ -18,5 +18,5 @@ const nylasInfoSchema = new Schema<INylasInfo>({
 });
 
 export const NylasInfo =
-  model<INylasInfo>("NylasInfo", nylasInfoSchema) || models.NylasInfo;
+  model("NylasInfo", nylasInfoSchema) || models.NylasInfo;
 export default NylasInfo;
