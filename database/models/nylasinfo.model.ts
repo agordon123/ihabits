@@ -5,7 +5,7 @@ export interface INylasInfo extends Document {
   userId: Schema.Types.ObjectId; // Refers to User
 }
 
-const nylasInfoSchema = new Schema<INylasInfo>({
+const nylasInfoSchema = new Schema({
   accessToken: { type: String, required: true },
   refreshToken: { type: String, required: true },
   userId: {

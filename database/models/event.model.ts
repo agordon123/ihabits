@@ -8,7 +8,7 @@ export interface IEvent extends Document {
   endTime?: Schema.Types.Date;
 }
 
-const eventSchema = new Schema<IEvent>({
+const eventSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   title: { type: String, required: true },
   description: { type: String },

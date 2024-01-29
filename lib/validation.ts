@@ -6,4 +6,5 @@ export const userSchema = z.object({
   name: z.string(),
   appleId: z.string().optional(),
   googleId: z.string().optional(),
+  username: z.string(),
 });

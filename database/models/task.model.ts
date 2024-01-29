@@ -1,5 +1,5 @@
 import { Schema, models, model, Document } from "mongoose";
-import * as uuid from "uuid";
+
 export interface ITask extends Document {
   userId: Schema.Types.ObjectId; // Refers to User
   title: string;
@@ -8,7 +8,7 @@ export interface ITask extends Document {
   completed: boolean;
 }
 
-const taskSchema = new Schema<ITask>({
+const taskSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   title: { type: String, required: true },
   description: { type: String },

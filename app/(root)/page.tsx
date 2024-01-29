@@ -1,30 +1,19 @@
+import TaskCard from "@/components/cards/TaskCard";
 import { Button } from "@/components/ui/button";
 import { getUser } from "@/lib/actions/users.actions";
-import {
-  UserButton,
-  SignedIn,
-  SignedOut,
-  SignUpButton,
-  SignInButton,
-  auth,
-  useAuth,
-  SignUp,
-} from "@clerk/nextjs";
-import Image from "next/image";
+import { auth, useUser } from "@clerk/nextjs";
 
-export default function Home() {
+export default async function Home() {
+  const { userId: clerkId } = auth();
+
   return (
-    <div className="flex bg-dark-500 min-h-[100%] min-w-[100%] text-light-700">
-      <h1 className="h1-bold text-light-100">
-        Welcome to iHabits, for ADHDers by ADHDers
-      </h1>
-      <div className="mt-10 justify-center items-center">
-        <SignUpButton />
+    <div className="flex background-dark500_light500 min-h-[100%] min-w-[100%]">
+      <h1 className="h1-bold">Welcome to iHabits, for ADHDers by ADHDers</h1>
+      <div className="flex-col">
+        <div className="mt-10 justify-center items-center">
+          {/* <TaskCard user={user} /> */}
+        </div>
       </div>
-
-      <Button>
-        <SignInButton />
-      </Button>
     </div>
   );
 }

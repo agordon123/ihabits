@@ -1,10 +1,12 @@
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, auth } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import React from "react";
-
+interface PageProps {}
 export default async function Page() {
+  const { userId: clerkId } = auth();
   return (
     <div>
-      <UserButton afterSignOutUrl="/" appearance={{}} />
+      <UserButton afterSignOutUrl="/" appearance={{ baseTheme: dark }} />
     </div>
   );
 }

@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "react-day-picker";
 import { userSchema } from "@/lib/validation";
+
 const UserProfile = () => {
   const form = useForm<z.infer<typeof userSchema>>({
     resolver: zodResolver(userSchema),
@@ -23,6 +24,9 @@ const UserProfile = () => {
       email: "",
       picture: "",
       name: "",
+      username: "",
+      googleId: "",
+      appleId: "",
     },
   });
   const onSubmit = () => {};
@@ -62,6 +66,20 @@ const UserProfile = () => {
           <FormField
             control={form.control}
             name="picture"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email *</FormLabel>
+                <FormControl>
+                  <Input placeholder="name" {...field} />
+                </FormControl>
+                <FormDescription>Real name</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="username"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email *</FormLabel>
