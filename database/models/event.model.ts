@@ -1,5 +1,4 @@
 import { Schema, models, model, Document } from "mongoose";
-import * as uuid from "uuid";
 
 export interface IEvent extends Document {
   userId: Schema.Types.ObjectId; // Refers to User
@@ -10,11 +9,11 @@ export interface IEvent extends Document {
 }
 
 const eventSchema = new Schema<IEvent>({
-  userId: { type: String, required: true, ref: "User" },
+  userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   title: { type: String, required: true },
   description: { type: String },
-  startTime: { type: Date, required: true },
-  endTime: { type: Date },
+  startTime: { type: Schema.Types.Date, required: true },
+  endTime: { type: Schema.Types.Date },
 });
 
 const Event = model("Event", eventSchema) || models.Event;

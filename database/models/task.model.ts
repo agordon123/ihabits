@@ -12,7 +12,7 @@ const taskSchema = new Schema<ITask>({
   userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   title: { type: String, required: true },
   description: { type: String },
-  dueDate: { type: Date, required: true },
+  dueDate: { type: Schema.Types.Date, required: true },
   completed: { type: Boolean, default: false },
 });
 

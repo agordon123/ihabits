@@ -1,5 +1,4 @@
 import { Schema, models, model, Document } from "mongoose";
-import * as uuid from "uuid";
 export interface INylasInfo extends Document {
   accessToken: string;
   refreshToken: string;
