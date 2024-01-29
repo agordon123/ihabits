@@ -7,7 +7,6 @@ export interface INylasInfo extends Document {
 }
 
 const nylasInfoSchema = new Schema<INylasInfo>({
-  _id: { type: String, default: () => uuid.v4() },
   accessToken: { type: String, required: true },
   refreshToken: { type: String, required: true },
   userId: { type: String, required: true, unique: true, ref: "User" },
