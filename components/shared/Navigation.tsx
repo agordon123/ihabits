@@ -7,6 +7,7 @@ import {
   SignUp,
   SignUpButton,
   SignedIn,
+  SignedOut,
   UserButton,
 } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
@@ -33,7 +34,7 @@ const Navbar = () => {
             }}
           />
         )}
-        <UserButton appearance={{ baseTheme: dark }} />
+        {<SignedOut /> && <SignInButton />}
       </div>
     </nav>
   );

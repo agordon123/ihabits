@@ -12,7 +12,7 @@ const nextConfig = {
       },
     ],
     loader: "default",
-    domains: ["localhost", "ihabits.vercel.com"],
+    
   },
 };
 

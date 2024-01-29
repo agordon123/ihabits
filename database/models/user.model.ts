@@ -15,7 +15,6 @@ export interface IUser extends Document {
   tasks?: Schema.Types.ObjectId;
   journalEntries?: Schema.Types.ObjectId;
   events?: Schema.Types.ObjectId;
-  nylasInfo?: Schema.Types.ObjectId;
 }
 
 const userSchema = new Schema({
@@ -35,7 +34,6 @@ const userSchema = new Schema({
   githubId: { type: String, unique: true, sparse: true },
   appleId: { type: String, unique: true, sparse: true },
   // Reference NylasInfo collection
-  nylasInfo: [{ type: Schema.Types.ObjectId, ref: "NylasInfo" }],
 });
 
 export const User = models.User || model("User", userSchema);

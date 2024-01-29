@@ -44,7 +44,7 @@ const LeftSidebar = ({ clerkId, _id }: Props) => {
   }, [loggedIn, pathname, router, userId]);
   return (
     <section className="custom-scrollbar bg-dark-500 sticky left-0 top-0 flex h-screen w-fit flex-col justify-between  overflow-y-auto border-r p-6 pt-8 shadow-light-300 dark:shadow-none max-sm:hidden xl:w-[266px]">
-      <div className="mt-10">
+      <div className="mt-20">
         <Link href={`/`}>
           <Image
             className="object-contain"
