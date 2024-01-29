@@ -9,8 +9,7 @@ export interface ITask extends Document {
 }
 
 const taskSchema = new Schema<ITask>({
-  _id: { type: String, default: () => uuid.v4() },
-  userId: { type: String, required: true, ref: "User" },
+  userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   title: { type: String, required: true },
   description: { type: String },
   dueDate: { type: Date, required: true },

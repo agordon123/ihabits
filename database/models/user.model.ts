@@ -27,8 +27,8 @@ const userSchema = new Schema({
   // Reference other collections
   habits: [{ type: String, ref: "Habit" }],
   tasks: [{ type: String, ref: "Task" }],
-  journalEntries: [{ type: String, ref: "JournalEntry" }],
-  events: [{ type: String, ref: "Event" }],
+  journalEntries: [{ type: Schema.Types.ObjectId, ref: "JournalEntry" }],
+  events: [{ type: Schema.Types.ObjectId, ref: "Event" }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   provider: { type: String, required: false },
@@ -36,9 +36,9 @@ const userSchema = new Schema({
   githubId: { type: String, unique: true, sparse: true },
   appleId: { type: String, unique: true, sparse: true },
   // Reference NylasInfo collection
-  nylasInfo: [{ type: String, ref: "NylasInfo" }],
+  nylasInfo: [{ type: Schema.Types.ObjectId, ref: "NylasInfo" }],
 });
 
-export const UserModel = models.User || model<IUser>("User", userSchema);
+export const User = models.User || model("User", userSchema);
 
-export default UserModel;
+export default User;

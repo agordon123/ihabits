@@ -10,7 +10,6 @@ export interface IEvent extends Document {
 }
 
 const eventSchema = new Schema<IEvent>({
-  _id: { type: String, default: () => uuid.v4() },
   userId: { type: String, required: true, ref: "User" },
   title: { type: String, required: true },
   description: { type: String },
@@ -18,6 +17,6 @@ const eventSchema = new Schema<IEvent>({
   endTime: { type: Date },
 });
 
-const Event = model<IEvent>("Event", eventSchema) || models.Event;
+const Event = model("Event", eventSchema) || models.Event;
 
 export default Event;

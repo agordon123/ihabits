@@ -9,12 +9,10 @@ export interface IJournalEntry extends Document {
 }
 
 const journalEntrySchema = new Schema<IJournalEntry>({
-  _id: { type: String, default: () => uuid.v4() },
   userId: { type: String, required: true, ref: "User" },
   content: { type: String, required: true },
   createdAt: { type: Date, required: true },
 });
 
 export const JournalEntry =
-  mongoose.model<IJournalEntry>("JournalEntry", journalEntrySchema) ||
-  models.JournalEntry;
+  mongoose.model("JournalEntry", journalEntrySchema) || models.JournalEntry;
