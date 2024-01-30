@@ -8,7 +8,7 @@ import { error } from "console";
 import React from "react";
 
 interface Props {
-  clerkId: string;
+  clerkId?: string;
   user: {
     _id: string;
     clerkId: string;
@@ -20,7 +20,7 @@ interface Props {
   };
 }
 
-const Page = async ({ user }: Props) => {
+const Page = async ({ user, clerkId }: Props) => {
   const { userId } = auth();
 
   if (!userId) return null;
