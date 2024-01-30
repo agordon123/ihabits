@@ -18,26 +18,18 @@ import { IUser } from "@/database/models/user.model";
 
 const LeftSidebar = () => {
   const pathname = usePathname();
-  const { userId } = useAuth();
   const router = useRouter();
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const [user, setUser] = useState<IUser | null>(null);
-  const handleOnClick = async () => {};
-  useEffect(() => {
-    const userCheck = async () => {
-      if (!userId) {
-        return;
-      } else {
-        setLoggedIn(true);
-      }
-    };
-    if (pathname === "/dashboard") {
-      userCheck();
-      if (!loggedIn) {
-        router.push("/sign-in");
-      }
-    }
-  }, [loggedIn, pathname, router, userId]);
+  const { user, isSignedIn } = useUser();
+  if (
+    navLinks.filter((item, idx) =>
+      item.route === "/dashboard/profile"
+        ? navLinks[idx].route === `/dashboard/profile/_id`
+        : null
+    )
+  ) {
+    // Code to execute if the condition is true
+  }
+
   return (
     <section className="custom-scrollbar background-light800_dark400 text-dark500_light700 sticky left-0 top-0 flex h-screen w-fit flex-col justify-between  overflow-y-auto border-r p-6 pt-8 shadow-light-300 dark:shadow-none max-sm:hidden xl:w-[266px]">
       <div className="mt-20">

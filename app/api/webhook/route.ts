@@ -92,13 +92,13 @@ export async function POST(req: Request) {
       },
       path: `/profile/${id}`,
     });
-
+    console.log(mongoUser, "webhook mongo user updated");
     return NextResponse.json({ message: "OK", user: mongoUser });
   }
 
   if (eventType === "user.deleted") {
     const { id } = evt.data;
-
+    console.log(evt.data);
     const deletedUser = await deleteUser({
       clerkId: id!,
     });

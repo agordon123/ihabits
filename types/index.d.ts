@@ -7,6 +7,7 @@ export interface NavLink {
   name: string;
   route: string;
   needsAuth?: boolean;
+  userId?: string;
 }
 export interface ParamsProps {
   params: { id: string };

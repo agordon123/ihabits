@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
-import { auth } from "@clerk/nextjs";
+import React, { useState } from "react";
 import * as z from "zod";
 import {
   FormControl,
@@ -14,38 +13,68 @@ import {
 import { Input } from "../ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "react-day-picker";
-import { userSchema } from "@/lib/validation";
-import { getUser, getUserInfo } from "@/lib/actions/users.actions";
+import { Button } from "../ui/button";
+import { ProfileSchema } from "@/lib/validation";
+import { updateUser } from "@/lib/actions/users.actions";
+import { usePathname, useRouter } from "next/navigation";
+import { Irish_Grover } from "next/font/google";
+
 interface Props {
   user: {
+    _id: string;
     clerkId: string;
     email: string;
     picture: string;
     name: string;
     username: string;
-    googleId?: string;
-    appleId?: string;
   };
 }
 
 const UserProfile = ({ user }: Props) => {
-  const { userId: clerkId } = auth();
-  const form = useForm<z.infer<typeof userSchema>>({
-    resolver: zodResolver(userSchema),
+  const parsedUser = JSON.parse(JSON.stringify(user));
+  const userId = parsedUser._id; // Add this line to extract the user ID as a string
+  console.log(userId, "38", parsedUser);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const form = useForm<z.infer<typeof ProfileSchema>>({
+    resolver: zodResolver(ProfileSchema),
     defaultValues: {
-      email: "",
-      picture: "",
-      name: "",
-      username: "",
-      googleId: "",
-      appleId: "",
+      clerkId: parsedUser.clerkId,
+      email: parsedUser.email,
+      picture: parsedUser.picture,
+      name: parsedUser.name,
+      username: parsedUser.username,
+      googleId: parsedUser.googleId || "",
+      appleId: parsedUser.appleId || "",
     },
   });
-  const onSubmit = () => {};
-  useEffect(() => {
-    const user = getUserInfo({ clerkId });
-  });
+  async function onSubmit(values: z.infer<typeof ProfileSchema>) {
+    setIsSubmitting(true);
+
+    try {
+      await updateUser({
+        _id: userId,
+        clerkId: values.clerkId,
+        updateData: {
+          name: values.name,
+          username: values.username,
+          picture: values.picture,
+          email: values.email,
+          googleId: values.googleId,
+          appleId: values.appleId,
+        },
+        path: pathname,
+      });
+
+      router.back();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <>
       <Form {...form}>
@@ -97,9 +126,9 @@ const UserProfile = ({ user }: Props) => {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email *</FormLabel>
+                <FormLabel>Clerk Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="name" {...field} />
+                  <Input placeholder="name" {...field} disabled />
                 </FormControl>
                 <FormDescription>Real name</FormDescription>
                 <FormMessage />
@@ -111,7 +140,7 @@ const UserProfile = ({ user }: Props) => {
             name="googleId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Google Calendar Id? (optional) </FormLabel>
+                <FormLabel>Google Calendar Id? - optional </FormLabel>
                 <FormControl>
                   <Input placeholder="Google Auth Id" {...field} />
                 </FormControl>
@@ -125,11 +154,11 @@ const UserProfile = ({ user }: Props) => {
             name="appleId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Apple API Id ? (Optional)</FormLabel>
+                <FormLabel>Apple API Id ? -Optional</FormLabel>
                 <FormControl>
-                  <Input placeholder="name" {...field} />
+                  <Input placeholder="apple token.." {...field} />
                 </FormControl>
-                <FormDescription>Real name</FormDescription>
+                <FormDescription>Apple API Token</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

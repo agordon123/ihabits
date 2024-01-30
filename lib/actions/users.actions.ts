@@ -3,6 +3,7 @@
 import UserModel from "@/database/models/user.model";
 import { CreateUserParams } from "./shared.types";
 import { connectToDb } from "@/database/db";
+import { auth, currentUser } from "@clerk/nextjs";
 
 export const createUser = async (params: CreateUserParams) => {
   try {
@@ -22,7 +23,7 @@ export const updateUser = async (params: any) => {
     connectToDb();
     const { clerkId } = params;
     const updatedUser = await UserModel.findOneAndUpdate({ clerkId: clerkId });
-    return updatedUser;
+    return { updatedUser };
   } catch (error) {
     console.log(error);
     throw error;
@@ -32,7 +33,7 @@ export const deleteUser = async (params: any) => {
   try {
     connectToDb();
     const { clerkId } = params;
-    const deletedUser = await UserModel.findByIdAndDelete({ id: clerkId });
+    const deletedUser = await UserModel.findByIdAndDelete({ clerkId: clerkId });
     return deletedUser;
   } catch (error) {
     console.log(error);
@@ -63,4 +64,29 @@ export const getUserInfo = async (params: any) => {
     }
     return user;
   } catch (error) {}
+};
+export const addKeyToUser = async (params: any) => {
+  try {
+    connectToDb();
+    const { clerkId, key } = params;
+    const user = await UserModel.findOneAndUpdate(
+      { clerkId: clerkId },
+      { $push: { keys: key } }
+    );
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+export const getClerkUser = async (params: any) => {
+  try {
+    connectToDb();
+    const { userId } = auth();
+    const user = await currentUser();
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
