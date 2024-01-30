@@ -43,10 +43,24 @@ export const getUser = async (params: any) => {
   try {
     connectToDb();
     const { clerkId } = params;
-    const user = await UserModel.findById({ id: clerkId });
+    const user = await UserModel.findOne({ clerkId: clerkId });
+    console.log(user, "user");
     return user;
   } catch (error) {
     console.log(error);
     throw error;
   }
+};
+export const getUserInfo = async (params: any) => {
+  try {
+    connectToDb();
+    const { userId } = params;
+
+    const user = await UserModel.findOne({ clerkId: userId });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return user;
+  } catch (error) {}
 };
