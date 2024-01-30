@@ -14,7 +14,7 @@ import { dark } from "@clerk/themes";
 
 const Navbar = () => {
   return (
-    <nav className="flex-between bg-dark-500 text-light-500 dark:dark-gradient fixed z-50 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
+    <nav className="flex-between background-light800_dark400  text-dark500_light700  dark:dark-gradient fixed z-50 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12 light-border-2">
       <Link href="/" className="flex items-center gap-1">
         <Image src="/images/site-logo.png" width={23} height={23} alt="logo" />
         <p className="h2-bold text-dark-100 dark:text-light-900 max-sm:hidden">
@@ -34,7 +34,6 @@ const Navbar = () => {
             }}
           />
         )}
-        {<SignedOut /> && <SignInButton />}
       </div>
     </nav>
   );

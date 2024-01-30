@@ -9,9 +9,9 @@ export default async function Page() {
   if (!userId) redirect("/sign-in");
 
   const mongoUser = await getUserInfo({ userId });
-
+  const { name, habits, journalEntries, events } = mongoUser;
   return (
-    <div>
+    <div className=" flex background-light800_dark400 text-dark400_light900 ">
       <h1 className="h1-bold">Welcome {JSON.stringify(mongoUser.name)}</h1>
     </div>
   );
