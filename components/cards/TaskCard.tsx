@@ -1,6 +1,15 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 interface Props {
   user: {
     _id: string;
@@ -12,11 +21,8 @@ interface Props {
 }
 const TaskCard = ({ user }: Props) => {
   return (
-    <Link
-      className="shadow-light100_darknone w-full max-xs:min-w-full xs:w-[260px]"
-      href={`/dashboard/${user._id}/tasks`}
-    >
-      <article className="background-light900_dark200 light-border flex w-full flex-col items-center justify-center rounded-2xl border p-8">
+    <Link href={`/dashboard/${user._id}/tasks`}>
+      <article className="background-light800_dark400  light-border flex w-full flex-col items-center justify-center rounded-2xl border p-8">
         <Image
           src={user.picture}
           width={100}
