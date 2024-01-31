@@ -11,6 +11,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import Theme from "./Theme";
 
 const Navbar = () => {
   return (
@@ -22,7 +23,8 @@ const Navbar = () => {
         </p>
       </Link>
 
-      <div className="flex-between gap-5 text-light-700">
+      <div className="flex-between gap-5 text-dark500_light700">
+        <Theme />
         {<SignedIn /> && (
           <UserButton
             afterSignOutUrl="/"
