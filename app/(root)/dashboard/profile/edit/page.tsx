@@ -4,6 +4,7 @@ import { IUser } from "@/database/models/user.model";
 import { getUserInfo } from "@/lib/actions/users.actions";
 import { currentUser } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs";
+import { useParams } from "next/navigation";
 import React from "react";
 
 const Page = async () => {

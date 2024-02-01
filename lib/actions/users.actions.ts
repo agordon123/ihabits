@@ -1,9 +1,10 @@
 "use server";
 
-import UserModel from "@/database/models/user.model";
-import { CreateUserParams } from "./shared.types";
+import UserModel, { User } from "@/database/models/user.model";
+import { CreateUserParams, UpdateUserParams } from "./shared.types";
 import { connectToDb } from "@/database/db";
 import { auth, currentUser } from "@clerk/nextjs";
+import { revalidatePath } from "next/cache";
 
 export const createUser = async (params: CreateUserParams) => {
   try {
@@ -18,13 +19,19 @@ export const createUser = async (params: CreateUserParams) => {
     throw error;
   }
 };
-export const updateUser = async (params: any) => {
+export const updateUser = async (params: UpdateUserParams) => {
   try {
     connectToDb();
-    const { clerkId } = params;
-    console.log(clerkId);
-    const updatedUser = await UserModel.findOneAndUpdate({ clerkId: clerkId });
-    return { updatedUser };
+
+    const { clerkId, updateData, path } = params;
+
+    await User.findOneAndUpdate({ clerkId }, updateData, {
+      new: true,
+    });
+
+    if (path) {
+      revalidatePath(path);
+    }
   } catch (error) {
     console.log(error);
     throw error;

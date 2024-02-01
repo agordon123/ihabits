@@ -13,7 +13,7 @@ export const navLinks: NavLink[] = [
   { name: "Notes", route: "/dashboard/notes", needsAuth: true },
   { name: "Habits", route: "/dashboard/habits", needsAuth: true },
   { name: "Journal", route: "/dashboard/journal", needsAuth: true },
-  { name: "Profile / Edit", route: `/dashboard/profile/edit`, needsAuth: true },
+  { name: "Profile / Edit", route: `/dashboard/profile`, needsAuth: true },
 ];
 export const CLIENT_URI =
   process.env.CLIENT_URI || `http://localhost:${process.env.PORT || 3000}`;

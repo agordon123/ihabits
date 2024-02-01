@@ -3,35 +3,17 @@ import { navLinks } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import {
-  auth,
-  SignInButton,
-  SignOutButton,
-  useAuth,
-  UserButton,
-  useUser,
-  WithUser,
-} from "@clerk/nextjs";
-import { IUser } from "@/database/models/user.model";
+import React from "react";
+
+import { useAuth } from "@clerk/nextjs";
 
 const LeftSidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, isSignedIn } = useUser();
-  if (
-    navLinks.filter((item, idx) =>
-      item.route === "/dashboard/profile"
-        ? navLinks[idx].route === `/dashboard/profile/_id`
-        : null
-    )
-  ) {
-    // Code to execute if the condition is true
-  }
+  const { userId } = useAuth();
 
   return (
-    <section className="custom-scrollbar background-light800_dark400 text-dark500_light700 sticky left-0 top-0 flex h-screen w-fit flex-col justify-between  overflow-y-auto border-r p-6 pt-8 shadow-light-300 dark:shadow-none max-sm:hidden xl:w-[266px]">
+    <section className="custom-scrollbar background-light900_dark200 text-dark500_light700 sticky left-0 top-0 flex h-screen w-fit flex-col justify-between  overflow-y-auto border-r p-6 pt-8 shadow-light-300 dark:shadow-none max-sm:hidden xl:w-[266px]">
       <div className="mt-20">
         <Link href={`/`}>
           <Image
@@ -49,7 +31,13 @@ const LeftSidebar = () => {
           const isActive =
             (pathname.includes(item.route) && item.route.length > 1) ||
             pathname === item.route;
-
+          if (item.route === "/dashboard/profile") {
+            if (userId) {
+              item.route = `${item.route}/${userId}`;
+            } else {
+              return null;
+            }
+          }
           return (
             <Link
               href={item.route}

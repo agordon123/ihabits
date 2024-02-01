@@ -22,7 +22,7 @@ const Page = async ({ params }: URLProps) => {
       <div className="flex flex-col-reverse items-start justify-between sm:flex-row">
         <div className="flex flex-col items-start gap-4 lg:flex-row">
           <Image
-            src={userInfo?.user.picture}
+            src={userInfo?.picture}
             alt="profile picture"
             width={140}
             height={140}
@@ -30,11 +30,9 @@ const Page = async ({ params }: URLProps) => {
           />
 
           <div className="mt-3">
-            <h2 className="h2-bold text-dark100_light900">
-              {userInfo.user.name}
-            </h2>
+            <h2 className="h2-bold text-dark100_light900">{userInfo?.name}</h2>
             <p className="paragraph-regular text-dark200_light800">
-              @{userInfo.user.username}
+              @{userInfo?.username}
             </p>
 
             <div className="mt-5 flex flex-wrap items-center justify-start gap-5"></div>
@@ -43,7 +41,7 @@ const Page = async ({ params }: URLProps) => {
 
         <div className="flex justify-end max-sm:mb-5 max-sm:w-full sm:mt-3">
           <SignedIn>
-            {clerkId === userInfo.user.clerkId && (
+            {clerkId === userInfo?.clerkId && (
               <Link href="/profile/edit">
                 <Button className="paragraph-medium btn-secondary text-dark300_light900 min-h-[46px] min-w-[175px] px-4 py-3">
                   Edit Profile
