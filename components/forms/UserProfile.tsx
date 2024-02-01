@@ -17,7 +17,6 @@ import { Button } from "../ui/button";
 import { ProfileSchema } from "@/lib/validation";
 import { updateUser } from "@/lib/actions/users.actions";
 import { usePathname, useRouter } from "next/navigation";
-import { Irish_Grover } from "next/font/google";
 
 interface Props {
   user: {
@@ -44,7 +43,6 @@ const UserProfile = ({ user }: Props) => {
       email: parsedUser.email,
       picture: parsedUser.picture,
       name: parsedUser.name,
-      username: parsedUser.username,
       googleId: parsedUser.googleId || "",
       appleId: parsedUser.appleId || "",
     },
@@ -54,11 +52,10 @@ const UserProfile = ({ user }: Props) => {
 
     try {
       await updateUser({
-        _id: userId,
         clerkId: values.clerkId,
         updateData: {
           name: values.name,
-          username: values.username,
+
           picture: values.picture,
           email: values.email,
           googleId: values.googleId,
