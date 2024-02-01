@@ -22,6 +22,7 @@ export const updateUser = async (params: any) => {
   try {
     connectToDb();
     const { clerkId } = params;
+    console.log(clerkId);
     const updatedUser = await UserModel.findOneAndUpdate({ clerkId: clerkId });
     return { updatedUser };
   } catch (error) {
