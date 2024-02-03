@@ -29,3 +29,17 @@ export interface UpdateUserParams {
   updateData: Partial<IUser>;
   path?: string;
 }
+export interface DeleteUserParams {
+  clerkId: string;
+}
+export interface CreateTaskParams {
+  userId: string;
+  title: string;
+  description?: string;
+  dueDate: Date;
+  completed: boolean;
+}
+interface GetUserWithTasksParams {
+  userId: string;
+  limit?: number;
+}

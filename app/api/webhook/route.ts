@@ -73,7 +73,6 @@ export async function POST(req: Request) {
     };
     // Create a new user in your database
     const mongoUser = await createUser(userParams);
-    console.log(mongoUser, "webhook mongo user created");
     return NextResponse.json({ message: "OK", user: mongoUser });
   }
 

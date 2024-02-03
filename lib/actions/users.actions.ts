@@ -1,7 +1,12 @@
 "use server";
 
 import UserModel, { User } from "@/database/models/user.model";
-import { CreateUserParams, UpdateUserParams } from "./shared.types";
+import {
+  CreateUserParams,
+  DeleteUserParams,
+  GetUserWithTasksParams,
+  UpdateUserParams,
+} from "./shared.types";
 import { connectToDb } from "@/database/db";
 import { auth, currentUser } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
@@ -37,7 +42,7 @@ export const updateUser = async (params: UpdateUserParams) => {
     throw error;
   }
 };
-export const deleteUser = async (params: any) => {
+export const deleteUser = async (params: DeleteUserParams) => {
   try {
     connectToDb();
     const { clerkId } = params;
@@ -98,3 +103,35 @@ export const getClerkUser = async (params: any) => {
     throw error;
   }
 };
+export async function getUserById(params: any) {
+  try {
+    connectToDb();
+
+    const { userId } = params;
+    const user = await User.findOne({ clerkId: userId });
+    console.log(user);
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+export async function getUserWithTasks(params: GetUserWithTasksParams) {
+  try {
+    connectToDb();
+
+    const { userId, limit } = params;
+    const query = await User.findOne({ clerkId: userId }).exec();
+    const user = await query.populate({
+      path: "tasks",
+      options: {
+        limit: limit || 5, // Provide a default limit or use the one provided
+        sort: { createdAt: -1 }, // Sorting tasks by createdAt in descending order
+      },
+    });
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

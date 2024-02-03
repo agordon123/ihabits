@@ -1,21 +1,22 @@
-import { Schema, models, model, Document } from "mongoose";
+import mongoose, { Schema, model, models, Document } from "mongoose";
 
 export interface ITask extends Document {
-  userId: Schema.Types.ObjectId; // Refers to User
+  user: Schema.Types.ObjectId; // Refers to User
   title: string;
   description?: string;
-  dueDate: Schema.Types.Date;
+  dueDate: Date;
   completed: boolean;
 }
 
-const taskSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
+const taskSchema = new Schema<ITask>({
+  user: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   title: { type: String, required: true },
-  description: { type: String },
-  dueDate: { type: Schema.Types.Date, required: true },
+  description: { type: String, optional: true },
+  dueDate: { type: Date, required: true },
   completed: { type: Boolean, default: false },
 });
 
-export const Task = model("Task", taskSchema) || models.Task;
+// Check if the model exists before creating it
+const Task = models.Task || model<ITask>("Task", taskSchema);
 
 export default Task;

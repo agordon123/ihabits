@@ -2,6 +2,7 @@
 import Nylas from "nylas";
 import { WebhookTriggers } from "nylas/lib/models/webhook";
 import { openWebhookTunnel } from "nylas/lib/services/tunnel";
+import nylas from "../nylas";
 export const connectNylas = () => {
   Nylas.config({
     clientId: process.env.NYLAS_CLIENT_ID!,

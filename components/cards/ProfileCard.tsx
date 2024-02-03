@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { auth } from "@clerk/nextjs";
 import { getUserInfo } from "@/lib/actions/users.actions";
+import NylasInfo from "@/database/models/nylasinfo.model";
 interface Props {
   clerkId: string;
   user: {
@@ -13,6 +14,11 @@ interface Props {
     username: string;
     googleId?: string;
     appleId?: string;
+    nylasInfo?: {
+      accessToken: string;
+      accountId: string;
+      email: string;
+    }[];
   };
 }
 const ProfileCard = async ({ user, clerkId }: Props) => {
@@ -44,7 +50,13 @@ const ProfileCard = async ({ user, clerkId }: Props) => {
             {mongoUser.username}
           </p>
         </div>
-        <div className="mt-5"></div>
+        <div className="mt-5">
+          {user.nylasInfo?.length === 0 ? (
+            <p>Connect Nylas</p>
+          ) : (
+            user.nylasInfo?.map((val, id) => val.accountId)
+          )}
+        </div>
       </article>
     </Link>
   );

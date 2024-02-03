@@ -1,12 +1,12 @@
 import Nylas from "nylas";
-import { WebhookTriggers } from "nylas/lib/models/webhook";
-import { openWebhookTunnel } from "nylas/lib/services/tunnel";
-
+import WebhookTriggers from "nylas/lib/models/webhook";
+import EventCreated from "nylas/lib/models/webhook";
 Nylas.config({
   clientId: process.env.NYLAS_CLIENT_ID!,
   clientSecret: process.env.NYLAS_CLIENT_SECRET!,
   apiServer: process.env.NYLAS_API_SERVER,
 });
+const nylas = new Nylas();
 const CLIENT_URI =
   process.env.CLIENT_URI || `http://localhost:${process.env.PORT || 3000}`;
 Nylas.application({
@@ -17,19 +17,22 @@ Nylas.application({
     JSON.stringify(applicationDetails)
   );
 });
-// Start the Nylas webhook
-openWebhookTunnel({
-  // Handle when a new message is created (sent)
-  onMessage: function handleEvent(delta: any) {
-    switch (delta.type) {
-      case WebhookTriggers.EventCreated:
-        console.log(
-          "Webhook trigger received, event created. Details: ",
-          JSON.stringify(delta.objectData, undefined, 2)
-        );
-        break;
-    }
-  },
-}).then((webhookDetails) => {
-  console.log("Webhook tunnel registered. Webhook ID: " + webhookDetails.id);
-});
+const createWebhook = async () => {
+  try {
+    const webhook = Nylas.webhooks.build({
+      requestBody: {
+        triggerTypes: [EventCreated],
+        callbackUrl: process.env.CALLBACK_URL,
+        description: "My first webhook",
+        notificationEmailAddress: process.env.EMAIL,
+      },
+    });
+
+    console.log("Webhook created:", webhook);
+  } catch (error) {
+    console.error("Error creating webhook:", error);
+  }
+};
+
+createWebhook();
+export default nylas;

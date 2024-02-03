@@ -1,7 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
-import * as React from "react";
-
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,86 +9,79 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
-export function JournalCard() {
-  return (
-    <Card className="w-[350px]">
-      <CardHeader>
-        <CardTitle>Create project</CardTitle>
-        <CardDescription>Deploy your new project in one-click.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Name of your project" />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Framework</Label>
-              <Select>
-                <SelectTrigger id="framework">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectItem value="next">Next.js</SelectItem>
-                  <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                  <SelectItem value="astro">Astro</SelectItem>
-                  <SelectItem value="nuxt">Nuxt.js</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button variant="outline">Cancel</Button>
-        <Button>Deploy</Button>
-      </CardFooter>
-    </Card>
-  );
-}
+import { Checkbox } from "../ui/checkbox";
+import { TaskSchema } from "@/lib/validation";
+import { ITask } from "@/database/models/task.model";
+import { IUser } from "@/database/models/user.model";
+import { auth } from "@clerk/nextjs";
+import { getUserWithTasks } from "@/lib/actions/users.actions";
+import { getAllTasks } from "@/lib/actions/tasks.actions";
 
 interface Props {
-  user: {
+  user: IUser;
+  tasks?: {
     _id: string;
-    clerkId: string;
-    picture: string;
-    name: string;
-    username: string;
-  };
+    userId: string;
+    title: string;
+    dueDate: Date | null;
+    completed: boolean;
+    description?: string;
+  }[];
 }
-const TaskCard = ({ user }: Props) => {
+
+async function TaskCard({ tasks, user }: Props) {
+  let userTasks;
+  const fetchedUserTasks = await getAllTasks(user.clerkId);
+  if (fetchedUserTasks) {
+    userTasks = fetchedUserTasks;
+  } else {
+    userTasks = [];
+  }
+
+  const parsedTasks: ITask[] = JSON.parse(JSON.stringify(fetchedUserTasks));
+
   return (
-    <Link href={`/dashboard/${user._id}/tasks`}>
-      <article className="background-light800_dark400  light-border flex w-full flex-col items-center justify-center rounded-2xl border p-8">
-        <Image
-          src={user.picture}
-          width={100}
-          height={100}
-          alt="profilepicture"
-          className="rounded-full"
-        />
-        <div className="mt-4  text-center">
-          <h3 className="h3-bold text-dark200_light900 line-clamp-1">
-            {user.name}
-          </h3>
-          <p className="body-regular text-dark500_light500 mt-2">
-            {user.username}
-          </p>
-        </div>
-      </article>
-    </Link>
+    <>
+      <Card className="w-[350px]">
+        <CardHeader>
+          <CardTitle>Tasks </CardTitle>
+          <CardDescription>Upcoming Tasks</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {parsedTasks.length > 0 ? (
+            parsedTasks.map((task) => (
+              <div key={task.id} className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Checkbox />
+                  <div>
+                    <h3 className="text-lg font-bold">{task.title}</h3>
+                    <p className="text-sm">{task.description}</p>
+                  </div>
+                </div>
+                <Link href={`/tasks/${task._id}`}>
+                  <a className="text-primary">View</a>
+                </Link>
+              </div>
+            ))
+          ) : (
+            <>
+              {" "}
+              <p>No tasks found</p>
+              <CardFooter className="flex justify-between">
+                <Link href="/tasks">
+                  <Button>View All</Button>
+                </Link>
+                <Link href="/tasks/new">
+                  <Button>Create</Button>
+                </Link>
+              </CardFooter>
+            </>
+          )}
+        </CardContent>
+      </Card>
+    </>
   );
-};
+}
 
 export default TaskCard;
