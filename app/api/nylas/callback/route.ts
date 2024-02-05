@@ -37,6 +37,5 @@ export async function GET(req: NextRequest) {
 
   const headers = createHeaders(access_token);
   const mergedHeaders = { ...req.headers, ...headers };
-  const updatedReq = { ...req, headers: mergedHeaders };
-  const accessToken = access_token; // Add this line to assign the value of access_token to accessToken
+  return mergedHeaders;
 }
