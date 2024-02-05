@@ -1,9 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { auth } from "@clerk/nextjs";
 import { getUserInfo } from "@/lib/actions/users.actions";
-import NylasInfo from "@/database/models/nylasinfo.model";
+
 interface Props {
   clerkId: string;
   user: {

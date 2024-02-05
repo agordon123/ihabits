@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { Schema, models, model, Document } from "mongoose";
 
 export interface IJournalEntry extends Document {
@@ -14,4 +13,4 @@ const journalEntrySchema = new Schema({
 });
 
 export const JournalEntry =
-  mongoose.model("JournalEntry", journalEntrySchema) || models.JournalEntry;
+  model("JournalEntry", journalEntrySchema) || models.JournalEntry;

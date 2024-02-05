@@ -9,13 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import { Checkbox } from "../ui/checkbox";
-import { TaskSchema } from "@/lib/validation";
 import { ITask } from "@/database/models/task.model";
 import { IUser } from "@/database/models/user.model";
-import { auth } from "@clerk/nextjs";
-import { getUserWithTasks } from "@/lib/actions/users.actions";
 import { getAllTasks } from "@/lib/actions/tasks.actions";
 
 interface Props {
@@ -39,7 +35,7 @@ async function TaskCard({ tasks, user }: Props) {
     userTasks = [];
   }
 
-  const parsedTasks: ITask[] = JSON.parse(JSON.stringify(fetchedUserTasks));
+  const parsedTasks: ITask[] = JSON.parse(JSON.stringify(userTasks));
 
   return (
     <>
@@ -49,7 +45,7 @@ async function TaskCard({ tasks, user }: Props) {
           <CardDescription>Upcoming Tasks</CardDescription>
         </CardHeader>
         <CardContent>
-          {parsedTasks.length > 0 ? (
+          {parsedTasks.length > 0 && parsedTasks.length <= 3 ? (
             parsedTasks.map((task) => (
               <div key={task.id} className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
@@ -60,7 +56,7 @@ async function TaskCard({ tasks, user }: Props) {
                   </div>
                 </div>
                 <Link href={`/tasks/${task._id}`}>
-                  <a className="text-primary">View</a>
+                  <a className="paragraph-semibold">View</a>
                 </Link>
               </div>
             ))

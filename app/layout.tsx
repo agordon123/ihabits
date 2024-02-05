@@ -6,7 +6,7 @@ import LeftSidebar from "@/components/shared/LeftSidebar";
 import Navbar from "@/components/shared/Navigation";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { dark } from "@clerk/themes";
-
+import React from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -39,7 +39,7 @@ export default function RootLayout({
               <Navbar />
               <div className="flex">
                 <LeftSidebar />
-                <section className="flex background-light800_dark400  text-dark500_light700 min-h-screen flex-1 flex-col px-6 pb-6 pt-36 max-md:pb-14 sm:px-14">
+                <section className="background-light800_darkgradient text-dark100_light900  flex min-h-screen flex-1 flex-col px-6 pb-6 pt-36 max-md:pb-14 sm:px-14">
                   <div className="mx-auto w-full max-w-5xl">{children}</div>
                 </section>
               </div>

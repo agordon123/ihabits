@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { Schema, models, model, Document } from "mongoose";
 
 export interface IHabit extends Document {
@@ -16,6 +15,6 @@ const habitSchema = new Schema({
   createdAt: { type: Schema.Types.Date, default: Date.now },
 });
 
-const Habit = mongoose.model("Habit", habitSchema) || models.Habit;
+const Habit = model("Habit", habitSchema) || models.Habit;
 
 export default Habit;

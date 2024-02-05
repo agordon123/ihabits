@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import send from "next";
+
 export async function POST(req: NextRequest, res: NextResponse<unknown>) {
   try {
     // Here, you would handle the incoming webhook data
