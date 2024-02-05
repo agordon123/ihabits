@@ -8,7 +8,7 @@ import {
   UpdateUserParams,
 } from "./shared.types";
 import { connectToDb } from "@/database/db";
-import { auth, currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 
 export const createUser = async (params: CreateUserParams) => {
@@ -46,7 +46,7 @@ export const deleteUser = async (params: DeleteUserParams) => {
   try {
     connectToDb();
     const { clerkId } = params;
-    const deletedUser = await UserModel.findByIdAndDelete({ clerkId: clerkId });
+    const deletedUser = await UserModel.findByIdAndDelete({ clerkId });
     return deletedUser;
   } catch (error) {
     console.log(error);
@@ -57,7 +57,7 @@ export const getUser = async (params: any) => {
   try {
     connectToDb();
     const { clerkId } = params;
-    const user = await UserModel.findOne({ clerkId: clerkId });
+    const user = await UserModel.findOne({ clerkId });
     console.log(user, "user");
     return user;
   } catch (error) {
@@ -83,7 +83,7 @@ export const addKeyToUser = async (params: any) => {
     connectToDb();
     const { clerkId, key } = params;
     const user = await UserModel.findOneAndUpdate(
-      { clerkId: clerkId },
+      { clerkId },
       { $push: { keys: key } }
     );
     return user;
@@ -95,7 +95,7 @@ export const addKeyToUser = async (params: any) => {
 export const getClerkUser = async (params: any) => {
   try {
     connectToDb();
-    const { userId } = auth();
+
     const user = await currentUser();
     return user;
   } catch (error) {

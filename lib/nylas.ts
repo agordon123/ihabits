@@ -8,7 +8,7 @@ Nylas.config({
 
 const CLIENT_URI =
   process.env.CLIENT_URI || `http://localhost:${process.env.PORT || 3000}`;
-const nylas = Nylas.application({
+Nylas.application({
   applicationName: "IHabits",
   iconUrl: "https://ihabits.vercel.app/favicon.ico",
   redirectUris: [CLIENT_URI],
@@ -18,6 +18,7 @@ const nylas = Nylas.application({
     JSON.stringify(applicationDetails)
   );
 });
+const nylas = Nylas.with(process.env.NYLAS_ACCESS_TOKEN! || "");
 const createWebhook = async () => {
   try {
     const webhook = Nylas.webhooks.build({

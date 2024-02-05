@@ -24,11 +24,11 @@ const NylasAuth = ({ email }: NylasAuthProps) => {
   const form = useForm<z.infer<typeof NylasAuthSchema>>({
     resolver: zodResolver(NylasAuthSchema),
     defaultValues: {
-      emailToAuthenticate: "",
+      emailToAuthenticate: email || "",
     },
   });
   const onConnectAccount = async () => {
-    const emailToAuthenticate = inputRef.current.valueOf();
+    const emailToAuthenticate = inputRef.current.valueOf() || userEmail;
     // Nylas Application Client ID
     const CLIENT_ID = process.env.NEXT_PUBLIC_NYLAS_CLIENT_ID!;
     // REDIRECT_URI is our endpoint that Nylas call's with a one-time code to retrieve the access token
@@ -65,7 +65,11 @@ const NylasAuth = ({ email }: NylasAuthProps) => {
               </FormItem>
             )}
           />
-          <Button type="submit" title="Connect Nylas" />
+          <Button
+            type="submit"
+            title="Connect Nylas"
+            aria-label="Connect Nylas Account"
+          />
         </form>
       </Form>
     </>

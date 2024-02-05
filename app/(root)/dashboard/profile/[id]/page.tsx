@@ -5,8 +5,6 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { URLProps } from "@/types";
-import { IUser } from "@/database/models/user.model";
-import { useParams } from "next/navigation";
 
 const Page = async ({ params }: URLProps) => {
   const { userId: clerkId } = auth();
