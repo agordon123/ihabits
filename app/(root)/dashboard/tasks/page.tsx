@@ -1,8 +1,6 @@
-import { ITask } from "@/database/models/task.model";
-import React from "react";
-import { getAllTasks } from "@/lib/actions/tasks.actions";
+/* eslint-disable no-unused-vars */
 import { auth } from "@clerk/nextjs";
-import { getUserById, getUserWithTasks } from "@/lib/actions/users.actions";
+import { getUserWithTasks } from "@/lib/actions/users.actions";
 interface PageProps {
   userId: string;
 }
@@ -12,7 +10,11 @@ const Page = async () => {
   if (!userId) return null;
   const userWithTasks = await getUserWithTasks({ userId });
   if (!userWithTasks) return null;
-  return <>{userId}</>;
+  return (
+    <div className="background-light800_dark400 text-dark400_light800">
+      {userId}
+    </div>
+  );
 };
 
 export default Page;

@@ -1,5 +1,5 @@
 import { connectToDb } from "@/database/db";
-import Task, { ITask } from "@/database/models/task.model";
+import Task from "@/database/models/task.model";
 import { IUser, User } from "@/database/models/user.model"; // Import the User model
 import { CreateTaskParams } from "./shared.types";
 // Import the connectToDb function

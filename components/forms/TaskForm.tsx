@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { ITask } from "@/database/models/task.model";
 import { TaskSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,26 +12,22 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { z } from "zod";
+import * as z from "zod";
 import { auth } from "@clerk/nextjs";
 import { Input } from "../ui/input";
 interface TaskFormProps {
-  task: {
-    userId: string;
-    title: string;
-    dueDate: Date | null;
-    completed: boolean;
-    description?: string;
-  };
+  user: string;
 }
-const TaskForm = ({ task }: TaskFormProps) => {
+const TaskForm = ({ user }: TaskFormProps) => {
   const { userId } = auth();
 
-  async function onSubmit(values: z.infer<typeof TaskSchema>) {}
+  async function onSubmit(values: z.infer<typeof TaskSchema>) {
+    console.log("values", values);
+  }
   const form = useForm<z.infer<typeof TaskSchema>>({
     resolver: zodResolver(TaskSchema),
     defaultValues: {
-      user: userId || "",
+      user: userId!,
       title: "",
       dueDate: null,
       completed: false,
@@ -45,12 +40,54 @@ const TaskForm = ({ task }: TaskFormProps) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
-            name="user"
+            name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email *</FormLabel>
+                <FormLabel>Task Name</FormLabel>
                 <FormControl>
-                  <Input disabled placeholder="email" {...field} />
+                  <Input placeholder="Task Name.." {...field} />
+                </FormControl>
+                <FormDescription>Preferred Email</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Task Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Task Name.." {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Task Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Task Name.." {...field} />
+                </FormControl>
+                <FormDescription>Preferred Email</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Task Due Date</FormLabel>
+                <FormControl>
+                  <Input placeholder="Task Name.." {...field} />
                 </FormControl>
                 <FormDescription>Preferred Email</FormDescription>
                 <FormMessage />

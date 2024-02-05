@@ -39,7 +39,7 @@ export interface CreateTaskParams {
   dueDate: Date;
   completed: boolean;
 }
-interface GetUserWithTasksParams {
+export interface GetUserWithTasksParams {
   userId: string;
   limit?: number;
 }

@@ -3,10 +3,7 @@ import UserProfile from "@/components/forms/UserProfile";
 import { IUser } from "@/database/models/user.model";
 import { getUserInfo } from "@/lib/actions/users.actions";
 import { URLProps } from "@/types";
-import { currentUser } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs";
-import { useParams } from "next/navigation";
-import React from "react";
 
 const Page = async ({ params }: URLProps) => {
   const { userId } = auth();

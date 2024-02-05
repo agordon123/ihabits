@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, models, Document } from "mongoose";
+import { Schema, model, models, Document } from "mongoose";
 
 export interface ITask extends Document {
   user: Schema.Types.ObjectId; // Refers to User

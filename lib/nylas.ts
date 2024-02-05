@@ -1,15 +1,16 @@
 import Nylas from "nylas";
-import WebhookTriggers from "nylas/lib/models/webhook";
 import EventCreated from "nylas/lib/models/webhook";
 Nylas.config({
   clientId: process.env.NYLAS_CLIENT_ID!,
   clientSecret: process.env.NYLAS_CLIENT_SECRET!,
   apiServer: process.env.NYLAS_API_SERVER,
 });
-const nylas = new Nylas();
+
 const CLIENT_URI =
   process.env.CLIENT_URI || `http://localhost:${process.env.PORT || 3000}`;
-Nylas.application({
+const nylas = Nylas.application({
+  applicationName: "IHabits",
+  iconUrl: "https://ihabits.vercel.app/favicon.ico",
   redirectUris: [CLIENT_URI],
 }).then((applicationDetails) => {
   console.log(
