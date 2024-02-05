@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { createHeaders } from "@/lib/actions/general.actions";
+
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest & { query: { code: string } }) {
@@ -31,11 +31,4 @@ export async function POST(req: NextRequest & { query: { code: string } }) {
     .catch((error) => console.log("error", error));
 
   return fetchResponse || new NextResponse();
-}
-export async function GET(req: NextRequest) {
-  const access_token = req.headers.get("access_token") || "";
-
-  const headers = createHeaders(access_token);
-  const mergedHeaders = { ...req.headers, ...headers };
-  return mergedHeaders;
 }
