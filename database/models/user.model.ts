@@ -5,6 +5,7 @@ export interface IUser extends Document {
   name: string;
   email: string;
   picture: string;
+  username?: string;
   createdAt: Date;
   updatedAt: Date;
   provider?: string;
@@ -15,6 +16,7 @@ export interface IUser extends Document {
   tasks?: Schema.Types.ObjectId[];
   journalEntries?: Schema.Types.ObjectId[];
   events?: Schema.Types.ObjectId[];
+  nylasInfo?: Schema.Types.ObjectId;
 }
 
 const userSchema = new Schema({
@@ -22,6 +24,7 @@ const userSchema = new Schema({
   email: { type: String, unique: true, required: true },
   picture: { type: String, required: false },
   name: { type: String, required: false },
+  username: { type: String, required: false },
   // Correctly reference other collections
   habits: [{ type: Schema.Types.ObjectId, ref: "Habit" }],
   tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
@@ -33,6 +36,7 @@ const userSchema = new Schema({
   googleId: { type: String, unique: true, sparse: true },
   githubId: { type: String, unique: true, sparse: true },
   appleId: { type: String, unique: true, sparse: true },
+  nylasInfo: { type: Schema.Types.ObjectId, ref: "NylasInfo" },
   // If you have a NylasInfo collection, ensure it's referenced correctly
 });
 

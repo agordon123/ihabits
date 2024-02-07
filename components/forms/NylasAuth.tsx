@@ -19,7 +19,7 @@ interface NylasAuthProps {
 }
 const NylasAuth = ({ email }: NylasAuthProps) => {
   const { isSignedIn, isLoaded } = useAuth();
-  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [userEmail, setUserEmail] = useState<string | null>(email);
   const inputRef = useRef("");
   const form = useForm<z.infer<typeof NylasAuthSchema>>({
     resolver: zodResolver(NylasAuthSchema),
@@ -32,7 +32,7 @@ const NylasAuth = ({ email }: NylasAuthProps) => {
     // Nylas Application Client ID
     const CLIENT_ID = process.env.NEXT_PUBLIC_NYLAS_CLIENT_ID!;
     // REDIRECT_URI is our endpoint that Nylas call's with a one-time code to retrieve the access token
-    const REDIRECT_URI = process.env.NYLAS_REDIRECT_URI!;
+    const REDIRECT_URI = "https://localhost:300/api/nylas/callback";
     // Redirect to Nylas’ oauth/authorize endpoint with CLIENT_ID, REDIRECT_URI,
     // and User Email (emailToAuthenticate)
     window.location.pathname = `https://api.nylas.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&login_hint=${emailToAuthenticate}&response_type=code&scopes=calendar.read_only`;

@@ -39,7 +39,7 @@ const ProfileCard = async ({ user, clerkId }: Props) => {
           width={100}
           height={100}
           alt="profilepicture"
-          className="rounded-full"
+          className="rounded-xl"
         />
         <div className="mt-4  text-center">
           <h3 className="h3-bold text-dark200_light900 line-clamp-1">
@@ -51,7 +51,9 @@ const ProfileCard = async ({ user, clerkId }: Props) => {
         </div>
         <div className="mt-5">
           {user.nylasInfo?.length === 0 ? (
-            <p>Connect Nylas</p>
+            <p className="body-regular text-dark500_light500 mt-2">
+              Connect Nylas
+            </p>
           ) : (
             user.nylasInfo?.map((val, id) => val.accountId)
           )}

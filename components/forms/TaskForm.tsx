@@ -71,7 +71,7 @@ const TaskForm = ({ user }: TaskFormProps) => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Task Name</FormLabel>
+                <FormLabel>Due Date</FormLabel>
                 <FormControl>
                   <Input placeholder="Task Name.." {...field} />
                 </FormControl>

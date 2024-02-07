@@ -71,7 +71,7 @@ export const getUserInfo = async (params: any) => {
     const { userId } = params;
 
     const user = await UserModel.findOne({ clerkId: userId });
-
+    console.log(user);
     if (!user) {
       throw new Error("User not found");
     }
@@ -130,6 +130,14 @@ export async function getUserWithTasks(params: GetUserWithTasksParams) {
       },
     });
     return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+export async function connectUserWithNylas() {
+  try {
+    connectToDb();
   } catch (error) {
     console.log(error);
     throw error;

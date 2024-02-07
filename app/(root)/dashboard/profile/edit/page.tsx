@@ -1,34 +1,22 @@
-import ProfileCard from "@/components/cards/ProfileCard";
 import UserProfile from "@/components/forms/UserProfile";
-import { IUser } from "@/database/models/user.model";
-import { getUserInfo } from "@/lib/actions/users.actions";
-import { URLProps } from "@/types";
 import { auth } from "@clerk/nextjs";
+import { getUserWithTasks } from "@/lib/actions/users.actions";
 
-const Page = async ({ params }: URLProps) => {
-  const { userId } = auth();
-
-  if (!userId) return null;
-
-  const mongoUser: IUser = await getUserInfo({ userId });
-  if (!mongoUser) return null;
+export const Page = async ({ params }: { params: string }) => {
+  const { userId: clerkId } = auth();
+  let mongoUser;
+  if (!clerkId) {
+    return <div>Not Found</div>;
+  } else {
+    mongoUser = await getUserWithTasks({ userId: clerkId });
+  }
 
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">Edit Profile</h1>
 
-      <div className="mt-9">
-        {userId && (
-          <ProfileCard
-            clerkId={userId}
-            user={JSON.parse(JSON.stringify(mongoUser!))}
-          />
-        )}
-      </div>
-      <div>
-        {userId && (
-          <UserProfile user={JSON.parse(JSON.stringify(mongoUser!))} />
-        )}
+      <div className="flex flex-col">
+        <UserProfile user={JSON.parse(JSON.stringify(mongoUser!))} />
       </div>
     </>
   );

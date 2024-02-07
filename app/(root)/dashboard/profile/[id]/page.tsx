@@ -24,7 +24,7 @@ const Page = async ({ params }: URLProps) => {
             alt="profile picture"
             width={140}
             height={140}
-            className="rounded-full object-cover"
+            className="rounded-xl object-cover"
           />
 
           <div className="mt-3">
@@ -40,7 +40,7 @@ const Page = async ({ params }: URLProps) => {
         <div className="flex justify-end max-sm:mb-5 max-sm:w-full sm:mt-3">
           <SignedIn>
             {clerkId === userInfo?.clerkId && (
-              <Link href="/profile/edit">
+              <Link href={`/dashboard/profile/edit`}>
                 <Button className="paragraph-medium btn-secondary text-dark300_light900 min-h-[46px] min-w-[175px] px-4 py-3">
                   Edit Profile
                 </Button>

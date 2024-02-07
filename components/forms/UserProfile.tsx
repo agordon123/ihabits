@@ -39,10 +39,10 @@ const UserProfile = ({ user }: Props) => {
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
-      clerkId: parsedUser.clerkId,
-      email: parsedUser.email,
-      picture: parsedUser.picture,
-      name: parsedUser.name,
+      clerkId: parsedUser.clerkId!,
+      email: parsedUser.email!,
+      picture: parsedUser.picture!,
+      name: parsedUser.name!,
       googleId: parsedUser.googleId || "",
       appleId: parsedUser.appleId || "",
     },
