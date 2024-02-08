@@ -2,7 +2,7 @@ import UserProfile from "@/components/forms/UserProfile";
 import { auth } from "@clerk/nextjs";
 import { getUserWithTasks } from "@/lib/actions/users.actions";
 
-export const Page = async ({ params }: { params: string }) => {
+const Page = async () => {
   const { userId: clerkId } = auth();
   let mongoUser;
   if (!clerkId) {
