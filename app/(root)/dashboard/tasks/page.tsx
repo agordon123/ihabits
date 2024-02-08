@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { auth } from "@clerk/nextjs";
 import { getUserWithTasks } from "@/lib/actions/users.actions";
-interface PageProps {
-  userId: string;
-}
+import React from "react";
+
 const Page = async () => {
   const { userId } = auth();
 
