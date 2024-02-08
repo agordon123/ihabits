@@ -1,13 +1,11 @@
 import { Schema, models, model, Document } from "mongoose";
 export interface INylasInfo extends Document {
-  accessToken: string;
-  refreshToken: string;
+  grantId: string;
   userId: Schema.Types.ObjectId; // Refers to User
 }
 
 const nylasInfoSchema = new Schema({
-  accessToken: { type: String, required: true },
-  refreshToken: { type: String, required: true },
+  grantId: { type: String, required: true, unique: true },
   userId: {
     type: Schema.Types.ObjectId,
     required: true,

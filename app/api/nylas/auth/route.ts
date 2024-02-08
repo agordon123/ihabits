@@ -1,18 +1,20 @@
-import nylas, { config } from "@/lib/nylas";
+import { nylas, AuthConfig } from "@/lib/actions/nylas.actions";
+import { currentUser } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const { user } = await req.body;
-    const authUrl: string = nylas.auth.urlForOAuth2({
-      clientId: config.clientId!,
-      provider: "google",
-      redirectUri: config.callbackUri!,
-      loginHint: "<USER_EMAIL>",
-      scope: ["email"],
-    });
-
-    return NextResponse.redirect(authUrl, { status: 302 });
+    const currentUserResult = await currentUser();
+    if (currentUserResult) {
+      const authUrl = nylas.auth.urlForOAuth2({
+        clientId: AuthConfig.clientId,
+        redirectUri: AuthConfig.redirectUri,
+        loginHint: currentUserResult.emailAddresses[0].emailAddress,
+        scope: ["email"],
+      });
+      console.log(authUrl);
+      return NextResponse.redirect(authUrl);
+    }
   } catch (error) {
     console.log(error);
   }

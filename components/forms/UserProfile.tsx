@@ -75,7 +75,10 @@ const UserProfile = ({ user }: Props) => {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="background-light900_dark200 text-dark200_light900 w-full space-y-8 rounded-sm"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -95,7 +98,7 @@ const UserProfile = ({ user }: Props) => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email *</FormLabel>
+                <FormLabel>Name *</FormLabel>
                 <FormControl>
                   <Input placeholder="name" {...field} />
                 </FormControl>
@@ -109,7 +112,7 @@ const UserProfile = ({ user }: Props) => {
             name="picture"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email *</FormLabel>
+                <FormLabel>Picture URL</FormLabel>
                 <FormControl>
                   <Input placeholder="name" {...field} />
                 </FormControl>

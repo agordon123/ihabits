@@ -1,12 +1,12 @@
-import { headers } from "next/headers";
+import { Calendar } from "@/components/ui/calendar";
 import React from "react";
 
 const Page = () => {
-  const authorization = headers().get("authorization");
-  if (!authorization) {
-    return <div>Unauthorized</div>;
-  }
-  return <div>Page</div>;
+  return (
+    <div className="justify-center align-middle">
+      <Calendar />
+    </div>
+  );
 };
 
 export default Page;

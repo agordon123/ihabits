@@ -1,6 +1,25 @@
 import { auth } from "@clerk/nextjs";
-import nylas from "../nylas";
-import { WebhookTriggers } from "nylas/lib/types/models/webhooks";
+
+import Nylas from "nylas";
+
+export const config = {
+  clientId: process.env.NYLAS_CLIENT_ID,
+  clientSecret: process.env.NYLAS_CLIENT_SECRET,
+  redirectUri:
+    "http://localhost:3000/api/nylas/callback" ||
+    "https://ihabits.vercel.app/api/nylas/callback",
+  apiKey: process.env.NYLAS_API_KEY,
+  apiUri: process.env.NYLAS_API_URI,
+};
+export const nylas = new Nylas({
+  apiKey: config.apiKey!, // Required to make API calls.
+  apiUri: config.apiUri, // Required to make API calls.
+});
+export const AuthConfig = {
+  apiKey: config.apiKey!, // Add the apiKey property
+  clientId: config.clientId!,
+  redirectUri: config.redirectUri!,
+};
 
 export const createCalendar = async () => {
   let newCalendar;
@@ -25,7 +44,7 @@ export async function getApplicationDetails() {
   return applicationDetails;
 }
 
-export const createConnector = async () => {
+export const createGoogleConnector = async () => {
   const connector = await nylas.connectors.create({
     requestBody: {
       name: "Google Connector", // Add the name property
@@ -43,29 +62,20 @@ export const createConnector = async () => {
       ],
     },
   });
+  console.log(connector);
   return connector;
 };
 
-export const createWebhook = async () => {
+export const createWebhook = async ({ email }: { email: string }) => {
   try {
     const webhook = await nylas.webhooks.create({
       requestBody: {
-        triggerTypes: [
-          WebhookTriggers.EventCreated,
-          WebhookTriggers.CalendarCreated,
-          WebhookTriggers.CalendarCreated,
-          WebhookTriggers.CalendarUpdated,
-          WebhookTriggers.GrantCreated,
-          WebhookTriggers.GrantCreated,
-          WebhookTriggers.GrantUpdated,
-          WebhookTriggers.EventDeleted,
-          WebhookTriggers.EventUpdated,
-        ],
         callbackUrl:
           "http://localhost:3000/api/nylas/webhook" ||
           "https://ihabits.vercel.app/api/nylas/webhook",
         description: "My first webhook",
-        notificationEmailAddress: "adamgordon119@gmail.com",
+        notificationEmailAddress: email!,
+        triggerTypes: [],
       },
     });
 
@@ -74,10 +84,14 @@ export const createWebhook = async () => {
     console.error("Error creating webhook:", error);
   }
 };
-export async function fetchAllCalendars(): Promise<void> {
+export async function fetchAllCalendars({
+  grantId,
+}: {
+  grantId: string;
+}): Promise<void> {
   try {
     const calendars = await nylas.calendars.list({
-      identifier: "<GRANT_ID>",
+      identifier: grantId!,
     });
 
     console.log("Available Calendars:", calendars);
@@ -86,12 +100,18 @@ export async function fetchAllCalendars(): Promise<void> {
   }
 }
 
-export async function fetchAllEventsFromCalendar(): Promise<void> {
+export async function fetchAllEventsFromCalendar({
+  grantId,
+  calendarId,
+}: {
+  grantId: string;
+  calendarId: string;
+}): Promise<void> {
   try {
     const events = await nylas.events.list({
-      identifier: "<GRANT_ID>",
+      identifier: grantId,
       queryParams: {
-        calendarId: "<CALENDAR_ID>",
+        calendarId,
       },
     });
 
@@ -100,3 +120,4 @@ export async function fetchAllEventsFromCalendar(): Promise<void> {
     console.error("Error fetching calendars:", error);
   }
 }
+export async function oauthGoogle() {}

@@ -1,32 +1,12 @@
 /* eslint-disable camelcase */
 import { NextRequest, NextResponse } from "next/server";
-import nylas, { config } from "@/lib/nylas";
+import { nylas, config } from "@/lib/actions/nylas.actions";
 import { auth } from "@clerk/nextjs";
 import { getUserInfo } from "@/lib/actions/users.actions";
 import User from "@/database/models/user.model";
-
-export async function POST(req: NextRequest & { query: { code: string } }) {
-  const client_id = process.env.NYLAS_CLIENT_ID;
-  const client_secret = process.env.NYLAS_CLIENT_SECRET;
-  const code = req.query.code;
-  if (!code) return new NextResponse("No code provided", { status: 400 });
-
-  const fetchResponse = await fetch(
-    `https://api.nylas.com/oauth/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=authorization_code&code=${code}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  return fetchResponse || new NextResponse();
-}
+import NylasInfo from "@/database/models/nylasinfo.model";
 
 export async function GET(req: NextRequest & { query: { code: string } }) {
-  // Assuming you're fetching some data here based on the access token
-
   const code = req.query.code;
 
   if (!code) {
@@ -39,7 +19,7 @@ export async function GET(req: NextRequest & { query: { code: string } }) {
       clientSecret: config.clientSecret!,
       clientId: config.clientId ?? "",
       code,
-      redirectUri: config.callbackUri!, // Add the redirectUri property with the appropriate value
+      redirectUri: config.redirectUri!, // Add the redirectUri property with the appropriate value
     });
 
     const { grantId } = response;
@@ -48,17 +28,22 @@ export async function GET(req: NextRequest & { query: { code: string } }) {
     if (!user) {
       return new NextResponse("User not found", { status: 404 });
     } else {
+      const nylasInfo = await NylasInfo.create({
+        grantId,
+        userId: user._id,
+      });
       const updatedUser = User.updateOne(
         { _id: user._id },
-        { nylasGrantId: grantId }
+        { nylasInfo: nylasInfo._id }
       );
-      console.log(updatedUser);
+      console.log(updatedUser, nylasInfo, grantId);
     }
 
     const nextResponse = new NextResponse(JSON.stringify({ grantId }), {
       headers: {
         "Content-Type": "application/json",
       },
+      status: 200,
     });
 
     return nextResponse;

@@ -26,5 +26,5 @@ export const TaskSchema = z.object({
   completed: z.boolean(),
 });
 export const NylasAuthSchema = z.object({
-  emailToAuthenticate: z.string().email(),
+  email: z.string().email(),
 });

@@ -44,4 +44,8 @@ export const getTasksByObjectId = async (_id: string) => {
     console.log(error);
   }
 };
-export const completeTask = async (_id: string) => {};
+export const completeTask = async (_id: string) => {
+  try {
+    connectToDb();
+  } catch (error) {}
+};

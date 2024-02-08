@@ -39,8 +39,8 @@ export default function RootLayout({
               <Navbar />
               <div className="flex">
                 <LeftSidebar />
-                <section className="background-light800_darkgradient text-dark100_light900  flex min-h-screen flex-1 flex-col px-6 pb-6 pt-36 max-md:pb-14 sm:px-14">
-                  <div className="mx-auto w-full max-w-5xl">{children}</div>
+                <section className="background-light800_darkgradient text-dark100_light900 flex  min-h-screen w-fit flex-1   pt-24 max-md:pb-14 sm:px-14">
+                  <div className="mx-auto w-fit max-w-5xl">{children}</div>
                 </section>
               </div>
             </main>
