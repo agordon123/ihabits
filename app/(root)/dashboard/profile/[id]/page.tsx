@@ -4,9 +4,8 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { URLProps } from "@/types";
 
-const Page = async ({ params }: URLProps) => {
+const Page = async () => {
   const { userId: clerkId } = auth();
   const user = await currentUser();
   const userInfo = await getUserInfo({ userId: clerkId });
