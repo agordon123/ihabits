@@ -5,6 +5,7 @@ const Page = () => {
   const [userGrantId, setGrantId] = useState(null);
 
   useEffect(() => {
+    // @ts-ignore
     const grantId = cookieCutter.get("nylas_user_grant_id");
     if (grantId) {
       setGrantId(grantId);

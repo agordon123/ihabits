@@ -1,24 +1,32 @@
 import { auth } from "@clerk/nextjs";
+import { nylas } from "../constants";
+import { WebhookTriggers } from "nylas/lib/types/models/webhooks";
+export const createWebhook = async () => {
+  try {
+    const webhook = await nylas.webhooks.create({
+      requestBody: {
+        callbackUrl: "https://ihabits.vercel.app/api/nylas/webhook",
+        description: "My first webhook",
+        notificationEmailAddress: "adamg42685@gmail.com",
+        triggerTypes: [
+          WebhookTriggers.CalendarCreated,
+          WebhookTriggers.CalendarUpdated,
+          WebhookTriggers.CalendarDeleted,
+          WebhookTriggers.GrantCreated,
+          WebhookTriggers.GrantDeleted,
+          WebhookTriggers.GrantUpdated,
+          WebhookTriggers.GrantExpired,
+          WebhookTriggers.EventCreated,
+          WebhookTriggers.EventUpdated,
+          WebhookTriggers.EventDeleted,
+        ],
+      },
+    });
 
-import Nylas from "nylas";
-
-export const config = {
-  clientId: process.env.NYLAS_CLIENT_ID,
-  clientSecret: process.env.NYLAS_CLIENT_SECRET,
-  redirectUri:
-    "http://localhost:3000/api/nylas/callback" ||
-    "https://ihabits.vercel.app/api/nylas/callback",
-  apiKey: process.env.NYLAS_API_KEY,
-  apiUri: process.env.NYLAS_API_URI,
-};
-export const nylas = new Nylas({
-  apiKey: config.apiKey!, // Required to make API calls.
-  apiUri: config.apiUri, // Required to make API calls.
-});
-export const AuthConfig = {
-  apiKey: config.apiKey!, // Add the apiKey property
-  clientId: config.clientId!,
-  redirectUri: config.redirectUri!,
+    console.log("Webhook created:", webhook);
+  } catch (error) {
+    console.error("Error creating webhook:", error);
+  }
 };
 
 export const createCalendar = async () => {
@@ -66,24 +74,6 @@ export const createGoogleConnector = async () => {
   return connector;
 };
 
-export const createWebhook = async ({ email }: { email: string }) => {
-  try {
-    const webhook = await nylas.webhooks.create({
-      requestBody: {
-        callbackUrl:
-          "http://localhost:3000/api/nylas/webhook" ||
-          "https://ihabits.vercel.app/api/nylas/webhook",
-        description: "My first webhook",
-        notificationEmailAddress: email!,
-        triggerTypes: [],
-      },
-    });
-
-    console.log("Webhook created:", webhook);
-  } catch (error) {
-    console.error("Error creating webhook:", error);
-  }
-};
 export async function fetchAllCalendars({
   grantId,
 }: {

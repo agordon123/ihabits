@@ -1,10 +1,5 @@
 import { cookies } from "next/headers";
-import Nylas from "nylas";
-
-const nylas = new Nylas({
-  apiKey: process.env.NYLAS_API_KEY!,
-  apiUri: process.env.NYLAS_API_URI!,
-});
+import { nylas } from "@/lib/constants";
 
 export const dynamic = "force-dynamic"; // defaults to auto
 
