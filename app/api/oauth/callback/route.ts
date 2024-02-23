@@ -20,7 +20,7 @@ export async function GET(request: Request & NextRequest) {
     clientSecret: process.env.NYLAS_API_URI,
     clientId: process.env.NYLAS_CLIENT_ID!,
     code,
-    redirectUri: "http://localhost:3000/oauth/callback",
+    redirectUri: "http://localhost:3000/api/oauth/callback",
     // @ts-ignore
     codeVerifier: secret,
   });
@@ -28,5 +28,7 @@ export async function GET(request: Request & NextRequest) {
   cookieStore.set("nylas_user_grant_id", grantId);
   console.log({ grantId });
   // return Response.json({ grantId })
-  return Response.redirect("http://localhost:3000");
+  return Response.redirect(
+    "http://ihabits.vercel.app/dashboard" || "http://localhost:3000"
+  );
 }

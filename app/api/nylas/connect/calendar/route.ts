@@ -9,7 +9,7 @@ export async function GET(request: Request) {
   const data = nylas.auth.urlForOAuth2PKCE({
     clientId: process.env.NYLAS_CLIENT_ID!,
     provider: "google",
-    redirectUri: "http://localhost:3000/oauth/callback",
+    redirectUri: "http://localhost:3000/api/oauth/callback",
     loginHint: "adamg42685@gmail.com",
   });
 
