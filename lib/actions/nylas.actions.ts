@@ -1,27 +1,27 @@
 import { auth } from "@clerk/nextjs";
 import { nylas } from "../constants";
-import { WebhookTriggers } from "nylas/lib/types/models/webhooks";
+
+import type { NylasResponse } from "nylas/lib/types/models/response";
+import {
+  WebhookTriggers,
+  WebhookWithSecret,
+} from "nylas/lib/types/models/webhooks";
 export const createWebhook = async () => {
   try {
-    const webhook = await nylas.webhooks.create({
-      requestBody: {
-        callbackUrl: "https://ihabits.vercel.app/api/nylas/webhook",
-        description: "My first webhook",
-        notificationEmailAddress: "adamg42685@gmail.com",
-        triggerTypes: [
-          WebhookTriggers.CalendarCreated,
-          WebhookTriggers.CalendarUpdated,
-          WebhookTriggers.CalendarDeleted,
-          WebhookTriggers.GrantCreated,
-          WebhookTriggers.GrantDeleted,
-          WebhookTriggers.GrantUpdated,
-          WebhookTriggers.GrantExpired,
-          WebhookTriggers.EventCreated,
-          WebhookTriggers.EventUpdated,
-          WebhookTriggers.EventDeleted,
-        ],
-      },
-    });
+    const webhook: NylasResponse<WebhookWithSecret> =
+      await nylas.webhooks.create({
+        requestBody: {
+          description: "My first webhook",
+          notificationEmailAddresses: ["adamg42685@gmail.com"],
+          triggerTypes: [
+            "grant.created",
+            "grant.updated",
+            "grant.expired",
+            "grant.deleted",
+          ] as WebhookTriggers[],
+          webhookUrl: "https://ihabits.vercel.app/api/nylas/webhook",
+        },
+      });
 
     console.log("Webhook created:", webhook);
   } catch (error) {
@@ -111,3 +111,13 @@ export async function fetchAllEventsFromCalendar({
   }
 }
 export async function oauthGoogle() {}
+export async function readGrantId(grantId: string) {
+  try {
+    const grantID = await nylas.grants.find({ grantId });
+
+    console.log(grantID);
+    return grantID;
+  } catch (error) {
+    console.log(error);
+  }
+}

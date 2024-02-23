@@ -1,16 +1,12 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import cookieCutter from "cookie-cutter";
-const Page = () => {
-  const [userGrantId, setGrantId] = useState(null);
+import React from "react";
+import { readGrantId } from "@/lib/actions/nylas.actions";
+import { cookies } from "next/headers";
 
-  useEffect(() => {
-    // @ts-ignore
-    const grantId = cookieCutter.get("nylas_user_grant_id");
-    if (grantId) {
-      setGrantId(grantId);
-    }
-  }, []);
+const Page = async () => {
+  const userGrantId = await readGrantId(
+    cookies().get("nylas_user_grant_id")!.toString()
+  );
+
   return (
     <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
       <a

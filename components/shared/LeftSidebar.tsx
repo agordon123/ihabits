@@ -60,6 +60,4 @@ const LeftSidebar = () => {
   );
 };
 
-export { LeftSidebar };
-
 export default LeftSidebar;

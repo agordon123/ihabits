@@ -21,3 +21,20 @@ export interface URLProps {
   params: { id: string };
   searchParams: { [key: string]: string | undefined };
 }
+export interface NylasDeltaResponse {
+  deltas: Array<{
+    object: string;
+    type: string;
+    source: string;
+    id: string;
+    time: number;
+    object_data: {
+      namespace_id: string;
+      account_id: string;
+      object: string;
+      attributes: null; // Assuming it's always null based on the provided example, adjust if it can have other types
+      id: string;
+      metadata: null; // Assuming it's always null based on the provided example, adjust if it can have other types
+    };
+  }>;
+}

@@ -1,4 +1,5 @@
 import { IUser } from "@/database/models/user.model";
+import { WebhookTriggers } from "@/types/webhook"; // Import the missing 'WebhookTriggers' type
 export interface CreateUserParams {
   clerkId: string;
   name: string;
@@ -42,4 +43,10 @@ export interface CreateTaskParams {
 export interface GetUserWithTasksParams {
   userId: string;
   limit?: number;
+}
+export interface CreateWebhookRequest {
+  callbackUrl: string;
+  description: string;
+  notificationEmailAddress: string;
+  triggerTypes: WebhookTriggers[];
 }
